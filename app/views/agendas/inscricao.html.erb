@@ -1,0 +1,18 @@
+<% if @confirmado == true %>
+    <h2>Inscrição na agenda <%= @tipoagenda.nome %> realizada!</h2>
+<% else %>
+    <h2>Pedido de inscrição na agenda <%= @tipoagenda.nome %> foi feito com sucesso. Inscrição pendente aguardando manifestação do supervisor.</h2>
+<% end %>   
+
+<h3><%= @tipoagenda.observacao %></h3>
+
+<br>
+
+<% if @tipoagenda.validaextra == true %>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container-fluid">
+        <p class="lead">Essa agenda exige o preenchimento de outro formulário para uso dos equipamentos.</p>
+        <p class="lead">Favor preencher esse <b><%= link_to "Formulário extra", @tipoagenda.reservadoformextra, class: 'btn btn-warning btn-lg' %> </b> </p>
+    </div>    
+</div>    
+<% end %>
