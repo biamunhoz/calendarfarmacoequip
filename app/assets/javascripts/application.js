@@ -45,7 +45,8 @@ $(function () {
 
     $('#calendar').fullCalendar({
         locale: 'pt-br',
-        events: '/events.json',
+        events: 'http://bernard.icb.usp.br/calendarfarmacoequip/events.json',
+        //events: '/events.json',
         titleFormat: 'MMMM YYYY ',
 
         dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
@@ -78,8 +79,9 @@ $(function () {
 
 
     $('#calendario').fullCalendar({
-        locale: 'pt-br',
-        events: '/resultagenda.json',
+        locale: 'pt-br',        
+        events: 'http://bernard.icb.usp.br/calendarfarmacoequip/resultagenda.json',
+        //events: '/resultagenda.json',
         titleFormat: 'MMMM YYYY ',
 
         dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'],
@@ -115,6 +117,7 @@ $(function () {
 $(document).ready(function(){
     $(".observacao #event_sala_id").change(function(){
 
+        $.ajax("http://bernard.icb.usp.br/calendarfarmacoequip/salas.json?sala_id=" + this.value)
         $.ajax("/salas.json?sala_id=" + this.value)
         .done(function(data){            
             $("#event_observacao").html("Informações gerais: " + data[0].observacao);
