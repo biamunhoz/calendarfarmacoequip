@@ -1,0 +1,57 @@
+<table class="table table-striped table-bordered table-hover table-condensed">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Cor</th>
+      <th>Permissão automática</th>
+      <th>Observação</th>
+      <th>Confirmação do agendamento</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @salas.each do |sala| %>
+      <tr>
+        <td><%= sala.nome %></td>
+        <td><input type="color" id="favcolor" name="favcolor" disabled value="<%= sala.cor %>"></td>
+        <td><%= sala.permissaoauto == true ? "Sim" : "Não" %></td>
+        <td><%= sala.observacao %></td>
+        <td><%= sala.confirmacao == true ? "Sim" : "Não" %></td>
+        <% if sala.permissaoauto == false %>
+          <% if carregarsalas.include?(sala.id) %>
+            <td></td>
+          <% else %>
+            <% if jasolicitouacesso(sala.id) %>
+              <td>Acesso solicitado. Aguarde</td>
+            <% else %>
+              <td><%= link_to 'Solicitar acesso', alterpendente_path(:id => current_user.id, :sala => sala.id), class: 'btn btn-default' %> </td>     
+            <% end %>          
+          <% end %>
+        <% else %>
+          <td></td>
+        <% end%>
+        <% if session[:admingeral] == true or tempermissaosuperadmin(sala.id) %>
+          <td><%= link_to "Permissão", permissao_path(sala), class: 'btn btn-light'  %>  </td>
+        <% else %>
+          <td></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if session[:admingeral] == true  %>
+  <%= link_to 'Novo Equipamento', new_sala_path, class: 'btn btn-info' %>
+<% end %>
+
+  <!-- Alterado botão Novo equipamento-->
+  
+<% @inscricao.each do |i| %>
+  <% if i.agenda_id.to_s == @agenda %>
+    <% if i.usertipo == "Admin" %>
+      <%= link_to 'Novo Equipamento', new_sala_path, class: 'btn btn-info' %>
+    <% end %>  
+  <% end %>                  
+<% end %>   
+<br>

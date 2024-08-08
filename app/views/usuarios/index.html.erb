@@ -1,0 +1,72 @@
+<script type="text/javascript">
+  $(document).ready(function() {
+      $('#usuario').dataTable ({
+          "iDisplayLength": 10, 
+          "bPaginate": true,    
+          "sPaginationType":"full_numbers", 
+          "bJQueryUI":true,
+          "bLengthChange":false, 
+          "ordering":     true, 
+          "aaSorting":    [],  
+          "oLanguage": { 
+              "sInfo":              "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+              "sInfoFiltered":      "Filtrado de _MAX_ registros no total",
+              "sInfoEmpty":         "Sem resultados",
+              "sZeroRecords":       "Sem resultados",
+              "sSearch":            "Buscar",
+              "oPaginate": {
+                  "sFirst":         "Primeiro",
+                  "sPrevious":      "Anterior",
+                  "sNext":          "Próximo",
+                  "sLast":          "Ultimo"
+              }
+          }
+      })
+  })
+</script>
+
+<p id="notice"><%= notice %></p>
+
+<h1>Usuários</h1>
+
+<table class="table table-bordered display" id="usuario">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Login</th>
+      <th>Tipo do usuário</th>
+      <th>E-mail principal</th>
+      <th>E-mail alternativo</th>
+      <th>E-mail USP </th>
+      <th>Telefone</th>
+      <th>Ramal</th>
+      <th></th>
+      <th></th>
+      <% if session[:admingeral] == true %>
+        <th></th>
+      <% end %>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @usuarios.each do |usuario| %>
+      <tr>
+        <td><%= usuario.nomeUsuario %></td>
+        <td><%= usuario.loginUsuario %></td>
+        <td><%= usuario.tipoUsuario %></td>
+        <td><%= usuario.emailPrincipalUsuario %></td>
+        <td><%= usuario.emailAlternativoUsuario %></td>
+        <td><%= usuario.emailUspUsuario %></td>
+        <td><%= usuario.numeroTelefoneFormatado %></td>
+        <td><%= usuario.ramalUsp %></td>
+        <td><%= link_to 'Detalhes', usuario, class: 'btn btn-info'  %></td>
+        <td><%= link_to 'Editar', edit_usuario_path(usuario), class: 'btn btn-warning' %></td>
+        <% if session[:admingeral] == true %> 
+          <td><%= link_to 'Apagar', usuario, method: :delete, data: { confirm: 'Tem certeza?' }, class: 'btn btn-danger' %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

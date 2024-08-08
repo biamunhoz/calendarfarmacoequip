@@ -1,0 +1,27 @@
+<h3> Login Externo </h3>
+<%= form_for :session, url: login_ext_path do |f| %>
+    <div class="form-group">
+      <%= f.label :email, 'E-mail' %>
+      <%= f.text_field :email, class: 'form-control',placeholder: 'Digite seu e-mail' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password, "Senha" %>
+      <%= f.password_field :password, class: 'form-control', placeholder: 'Digite a senha' %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit 'Enviar', class: 'btn btn-primary active' %>
+    </div>
+<% end %>
+
+<p><%= link_to "Registrar-se", new_usuario_path, class: 'btn btn-info' %> | <%= link_to "Esqueci minha senha", new_senha_reset_path, class: 'btn btn-success' %>
+
+<hr>
+<%= link_to "Login com número USP", login_path, class: 'btn btn-warning' %></p>
+
+<p></p>
+
+
+
+ 

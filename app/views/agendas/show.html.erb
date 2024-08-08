@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @agenda.nome %>
+</p>
+
+<p>
+  <strong>Apresentar na tela inicial:</strong>
+  <%= @agenda.apresentacaotelaini == true ? "Sim" : "Não" %>
+</p>
+
+<p>
+  <strong>Mostra informações do usuário que registrou:</strong>
+  <%= @agenda.mostrainfouser == true ? "Sim" : "Não" %>
+</p>
+
+<p>
+  <strong>Exige validação extra:</strong>
+  <%= @agenda.validaextra == true ? "Sim" : "Não" %>
+</p>
+
+<p>
+  <strong>Formulário extra de validação:</strong>
+  <%= link_to "Formulário extra", @agenda.reservadoformextra, class: 'btn btn-warning btn-lg' %>
+</p>
+
+<p>
+  <strong>Observação:</strong>
+  <%= @agenda.observacao %>
+</p>
+
+<p>
+  <strong>Tipo de agenda:</strong>
+  <%= @agenda.tipo %>
+</p>
+
+<% if session[:admingeral] == true %> 
+  <%= link_to 'Editar', edit_agenda_path(@agenda), class: 'btn btn-warning'  %> |
+<% end %>
+<%= link_to 'Voltar', :back, class: 'btn btn-dark active' %>

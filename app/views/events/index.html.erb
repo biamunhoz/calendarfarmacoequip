@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<!-- % if session[:admingeral] == true or @ehadmindesala == true %-->
+    <%= link_to 'Lista de eventos', listagem_path(:iddaagenda => 0), class: 'btn btn-warning'  %>
+<!--% end % -->
+
+<br>
+<br>
+<p style="color:red;"><b>⧗ EA - Em ánalise </b></p>
+<p style="color:green;"><b>Ⓥ - Confirmado</b> </p>
+
+<div id="calendar"></div>
+
+<br>
+
+<table >
+    <% agendaatual = "" %>
+    <% @salasdaagenda.each do |sala|  %>
+        <% if agendaatual == ""  or agendaatual != sala.agenda.nome  %>
+        <tr>
+            <td><b><%= sala.agenda.nome %> </b></td>
+            <% agendaatual = sala.agenda.nome %>
+        </tr> 
+        <tr>
+        <% end %>        
+            <td> <%= link_to 'Marcar', new_event_path(:idsala => sala.id), class: 'btn btn-info'  %>  <%= sala.nome %> <input type="color" id="favcolor" name="favcolor" disabled value="<%= sala.cor %>">  </td>
+        <% if agendaatual == ""  or agendaatual != sala.agenda.nome  %>
+            </tr>
+        <% end %>
+    <% end %>
+    
+</table>
