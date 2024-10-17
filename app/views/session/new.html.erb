@@ -1,3 +1,5 @@
+<% if ENV["SOMENTEACESSOLOCAL"] == "false" %>
+
 <h3> Login Externo </h3>
 <%= form_for :session, url: login_ext_path do |f| %>
     <div class="form-group">
@@ -18,10 +20,19 @@
 <p><%= link_to "Registrar-se", new_usuario_path, class: 'btn btn-info' %> | <%= link_to "Esqueci minha senha", new_senha_reset_path, class: 'btn btn-success' %>
 
 <hr>
+<% end %>
+
+<p></p>
+
 <%= link_to "Login com número USP", login_path, class: 'btn btn-warning' %></p>
 
 <p></p>
 
 
+<td>
+  <%= link_to eventoagendalivres_path, title: "Agendas", alt:"agenda", class: 'btn btn-default' do %>
+    <%= image_tag "edit.svg" %> Visualizar agenda
+  <% end %>
+</td>
 
  
