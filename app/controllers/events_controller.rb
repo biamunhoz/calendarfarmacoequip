@@ -164,6 +164,9 @@ class EventsController < ApplicationController
 
   def eventoagendalivres
     @@salamostrar = Sala.where("agenda_id in (select id from agendas where apresentacaotelaini = 1 and tipo = 'Publica')").select(" id ")
+    
+    @salasdaagenda = Sala.where(:id => @@salamostrar)
+    
   end 
 
   def agendamentos
@@ -391,7 +394,18 @@ class EventsController < ApplicationController
   
           if bEnviaEmailConfirmacao == true
             NotificaMailer.confirmacao(current_user.id, @event.title, @event.start_date.to_date, @event.end_date.to_date, horaini, horafim).deliver_now!
-            NotificaMailer.confirmacaosuper(@event.sala_id, @sala.nome, @event.title, @event.start_date.to_date, @event.end_date.to_date, horaini, horafim).deliver_now!
+
+            # 1 - Admin
+            # 2 - Supervisor  
+            @super = Permissao.where(perfil_id: [1,2], sala_id: @event.sala_id)
+
+            @super.each do |su|
+        
+              @usersuper = Usuario.find_by(id: su.usuario_id)
+
+              NotificaMailer.confirmacaosuper(@event.sala_id, @sala.nome, @event.title, @event.start_date.to_date, @event.end_date.to_date, horaini, horafim, @usersuper.emailPrincipalUsuario).deliver_now!
+
+            end 
 
             format.html { redirect_to @event, notice: 'Evento foi cadastrado com sucesso. Sujeito a avaliação dos administradores, aguarde confirmação.' }
             format.json { render :show, status: :created, location: @event }
@@ -475,7 +489,18 @@ class EventsController < ApplicationController
 
         if bEnviaEmailConfirmacao == true
           NotificaMailer.confirmacao(current_user.id, @event.title, @event.start_date.to_date, @event.end_date.to_date, horaini, horafim).deliver_now!
-          NotificaMailer.confirmacaosuper(@event.sala_id, @sala.nome, @event.title, @event.start_date.to_date, @event.end_date.to_date, horaini, horafim).deliver_now!
+          
+          # 1 - Admin
+          # 2 - Supervisor  
+          @super = Permissao.where(perfil_id: [1,2], sala_id: @event.sala_id)
+
+          @super.each do |su|
+      
+            @usersuper = Usuario.find_by(id: su.usuario_id)
+
+            NotificaMailer.confirmacaosuper(@event.sala_id, @sala.nome, @event.title, @event.start_date.to_date, @event.end_date.to_date, horaini, horafim, @usersuper.emailPrincipalUsuario).deliver_now!
+
+          end 
 
           format.html { redirect_to @event, notice: 'Evento foi atualizado com sucesso. Sujeito a avaliação dos administradores, aguarde confirmação.' }
           format.json { render :show, status: :created, location: @event }
